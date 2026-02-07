@@ -1,4 +1,0 @@
-aiogram==3.*
-aiohttp
-python-dotenv
-openfoodfacts
