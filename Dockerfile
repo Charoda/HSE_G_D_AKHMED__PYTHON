@@ -1,23 +1,20 @@
-FROM python:3.10-slim  # Используем slim версию для уменьшения размера образа
+# Используйте Python 3.12 вместо 3.13
+FROM python:3.12-slim
 
-# Устанавливаем системные зависимости для pandas/numpy
+WORKDIR /app
+
+# Устанавливаем системные зависимости
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     libpq-dev \
-    python3-dev \
+    libjpeg-dev \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-# Сначала копируем requirements.txt для кэширования слоя
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Устанавливаем pip и зависимости
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Копируем остальные файлы
 COPY . .
 
 CMD ["python", "bot.py"]
