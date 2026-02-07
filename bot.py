@@ -1,7 +1,6 @@
 import json
 import logging
 import asyncio
-import numpy as np
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 from datetime import datetime
