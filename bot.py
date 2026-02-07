@@ -34,11 +34,7 @@ API_TOKEN=os.getenv("API_TOKEN")
 if not API_TOKEN:
     print("API_TOKEN не указан")
 
-PROXY_URL = os.getenv("PROXY_URL")
-
-session = AiohttpSession(proxy=PROXY_URL, timeout=300)
-
-bot = Bot(token=API_TOKEN, session=session)
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 router = Router()
 dp.include_router(router)
