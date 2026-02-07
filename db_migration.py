@@ -7,19 +7,17 @@ from activelifeuser import User
 
 load_dotenv()
 
-# Получаем параметры из настроек
-db_params = settings.db_params
-        
+DATABASE_CONFIG = {
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": os.getenv("DB_PORT", "5432"),
+    "database": os.getenv("DB_NAME", "health_tracker"),
+    "user": os.getenv("DB_USER", "postgres"),
+    "password": os.getenv("DB_PASSWORD", "")
+}
+
 async def create_tables():
     try:
-
-        if not db_params:
-            logger.error("❌ Не заданы параметры подключения к БД")
-            return False
-        
-        logger.info(f"Подключаюсь к базе: {db_params.get('host')}:{db_params.get('port')}")
-        
-        conn = await asyncpg.connect(**db_params)
+        conn = await asyncpg.connect(**DATABASE_CONFIG)
         
         # Создание таблицы users
         await conn.execute('''
